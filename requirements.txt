@@ -1,6 +1,6 @@
 fastapi
 uvicorn
-guvicorn
+gunicorn
 https://github.com/dcbark01/PI-Web-API-Client-Python/archive/master.zip
 pandas
 PyJWT
