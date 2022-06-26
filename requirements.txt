@@ -11,7 +11,7 @@ azure-nspkg==3.0.2
 brotlipy==0.7.0
 certifi==2021.10.8
 click==7.1.2
-conda==4.12.0
+conda==4.3.16
 distlib==0.3.4
 distro==1.7.0
 dnspython==2.2.1
