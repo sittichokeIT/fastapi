@@ -10,14 +10,8 @@ azure-keyvault-secrets==4.4.0
 azure-nspkg==3.0.2
 brotlipy==0.7.0
 certifi==2021.10.8
-cffi @ file:///C:/ci_310/cffi_1642682485096/work
-charset-normalizer @ file:///tmp/build/80754af9/charset-normalizer_1630003229654/work
 click==7.1.2
-colorama @ file:///tmp/build/80754af9/colorama_1607707115595/work
 conda==4.12.0
-conda-content-trust @ file:///tmp/build/80754af9/conda-content-trust_1617045594566/work
-conda-package-handling @ file:///C:/ci/conda-package-handling_1649106011304/work
-cryptography @ file:///C:/ci/cryptography_1639414720302/work
 distlib==0.3.4
 distro==1.7.0
 dnspython==2.2.1
@@ -27,10 +21,8 @@ filelock==3.7.1
 gunicorn==20.1.0
 h11==0.13.0
 httptools==0.4.0
-idna @ file:///tmp/build/80754af9/idna_1637925883363/work
 influxdb-client==1.24.0
 isodate==0.6.1
-menuinst @ file:///C:/ci/menuinst_1631733438520/work
 motor==2.0.0
 msal==1.18.0
 msal-extensions==1.0.0
@@ -38,7 +30,6 @@ msrest==0.7.1
 ntlm-auth==1.5.0
 numpy==1.22.4
 oauthlib==3.2.0
-osisoft.pidevclub.piwebapi @ https://github.com/dcbark01/PI-Web-API-Client-Python/archive/master.zip
 pandas==1.4.2
 pipenv==2022.6.7
 platformdirs==2.5.2
@@ -55,7 +46,7 @@ python-multipart==0.0.5
 pytz==2022.1
 pywin32==302
 PyYAML==6.0
-six @ file:///tmp/build/80754af9/six_1644875935023/work
+six
 tabula-py==2.4.0
 typing_extensions==4.2.0
 unicorn==1.0.3
