@@ -1,7 +1,10 @@
+from imp import reload
+from re import I
 from fastapi import FastAPI
 from routes.route_user import user
-from fastapi.middleware.cors import CORSMiddleware
-
+from routes.route_province import province
+from starlette.middleware.cors import CORSMiddleware
+import uvicorn
 app = FastAPI()
 
 
@@ -19,3 +22,7 @@ app.add_middleware(
 )
 
 app.include_router(user)
+app.include_router(province)
+
+# if __name__ == "__main__":
+#     uvicorn.run("index:app", host="127.0.0.2", port=8000, log_level="info",reload =True)

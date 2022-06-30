@@ -1,14 +1,17 @@
 from asyncore import read
+from os import access
 import shutil
 from typing import List
-from fastapi import APIRouter, UploadFile, File, Depends
+from fastapi import APIRouter, UploadFile, Form, File, Depends,  HTTPException
 from models.model_user import User, UserLogin
+from models.model_province import Province
 from config.db import conn
 from schemas.schema_user import userEntity, usersEntity
+from schemas.schema_province import provinceEntity, provincesEntity,provinceslayerEntity
 from tabula import  read_pdf, convert_into
 
 from auth.auth_bearer import JWTBearer
-from auth.auth_handler import signJWT
+from auth.auth_handler import signJWT, decodeJWT
 
 import base64
 import bson
@@ -17,16 +20,26 @@ from bson.binary import Binary
 user = APIRouter()
 Path = conn.Fastapi.user
 Path_file = conn.Fastapi.file
+Path_object = conn.Fastapi.layer1
 
-
-# , dependencies=[Depends(JWTBearer)]
-@user.get('/')
-async def find_all():
+# , dependencies=[Depends(JWTBearer())]
+@user.get('/{token}')
+async def find_all(token:str):
+    # print(decodeJWT(token)['user_id'])
     # items = usersEntity(conn.Fastapi.user.find())
     # print(items[0]["name"])
-    return {
-        "result": usersEntity(Path.find())
-    }
+    token_check = decodeJWT(token)
+    # if token != None:
+    check = Path.find_one({"email": decodeJWT(token)['user_id']})
+    if check:
+        return {
+            "result": usersEntity(Path.find())
+        }
+    else: raise HTTPException(status_code=404, detail="Item not found")
+    # else :
+    #     return {
+    #         "message": "Expired tokens!"
+    #     }
 
 @user.get('/find-by-user/{name}')
 async def find_by_user(name:str):
@@ -38,6 +51,16 @@ async def find_by_user(name:str):
     else : 
         return {
             "message": "User not found"
+        }
+
+@user.post('/login')
+async def login(user: UserLogin):
+    check = Path.find_one({"name": user.name,"password": user.password})
+    if check :
+        return signJWT(check["email"])
+    else :
+        return {
+            "access_token": "feild"
         }
 
 @user.post('/')
@@ -55,18 +78,6 @@ async def create_user(user: User):
             "message": "Successfully created"
         }
         
-@user.post('/login')
-async def login(user: UserLogin):
-    check = Path.find_one({"name": user.name,"password": user.password})
-    print(check["email"])
-    if check :
-        return signJWT(check["email"])
-    else :
-        return {
-            "error": "Wrong login details!"
-        }
-        
-   
 @user.post('/update/{id}')
 async def update_user(id:str, user: User ):
     Path.update_one({"Id":id},{"$set":dict(user)})
@@ -112,3 +123,4 @@ async def download_filePDF(name: str):
     file_result = open(check["filename"],"wb")
     file_result.write(file_64_decode)
     print(check["filename"])
+
